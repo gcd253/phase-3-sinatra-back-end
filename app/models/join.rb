@@ -1,4 +1,4 @@
 class Join < ActiveRecord::Base
-    has_many :songs
-    has_many :playlists
+    belongs_to :song
+    belongs_to :playlist
 end
