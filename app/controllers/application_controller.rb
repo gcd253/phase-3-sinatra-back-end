@@ -6,4 +6,23 @@ class ApplicationController < Sinatra::Base
     { message: "Good luck with your project!" }.to_json
   end
 
+  get '/browse_playlists' do
+    playlists = Playlist.all
+    playlists.to_json
+  end
+
+  get '/user_playlists/:id' do
+    playlists = User.find(params[:id]).playlists
+    playlists.to_json
+  end
+
+  get '/playlist/:id' do
+    songs_in_playlist = Playlist.find(params[:id]).songs
+    songs_in_playlist.to_json
+  end
+
+  post '/playlist' do
+    Playlist.create(name: params[:name], id: params[:id], rating: params[:rating], user_id: params[:user_id])
+  end
+
 end
