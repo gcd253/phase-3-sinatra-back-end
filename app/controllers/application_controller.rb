@@ -28,7 +28,8 @@ class ApplicationController < Sinatra::Base
 
   # CREATE a new Playlist instance
   post '/playlist' do
-    Playlist.create(name: params[:name], id: params[:id], rating: params[:rating], user_id: params[:user_id])
+    playlist = Playlist.create(name: params[:name], id: params[:id], rating: params[:rating], user_id: params[:user_id])
+    playlist.to_json
   end
 
   # DELETE a Playlist instance
@@ -58,5 +59,17 @@ class ApplicationController < Sinatra::Base
     user.to_json
   end
 
+  # CREATE a new Join table row (add a song to the playlist of your choice)
+  post '/songs' do
+    new_song = Join.create(playlist_id: params[:playlist_id], song_id: params[:song_id])
+    new_song.to_json
+  end
+
+  # DELETE a row from the Join table (remove a song from the playlist of your choice)
+  delete '/songs/:id' do
+    delete_song = Join.find(params[:id])
+    delete_song.destroy
+    delete_song.to_json
+  end
 
 end
