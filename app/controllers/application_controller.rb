@@ -1,3 +1,5 @@
+require 'rspotify'
+
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
@@ -24,5 +26,21 @@ class ApplicationController < Sinatra::Base
   post '/playlist' do
     Playlist.create(name: params[:name], id: params[:id], rating: params[:rating], user_id: params[:user_id])
   end
+
+  delete '/playlist/:id' do
+    playlist = Playlist.find(params[:id])
+    playlist.destroy
+    playlist.to_json
+  end
+
+  post '/playlists/:id' do
+    song = Song.create(name: params[:name], artist: params[:artist])
+
+    playlist = Song.find(params[:id])
+    
+    Join.create(song_id: song.id, playlist_id: playlist.id)
+  end
+
+
 
 end
