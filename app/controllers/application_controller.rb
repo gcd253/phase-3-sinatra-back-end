@@ -14,16 +14,21 @@ class ApplicationController < Sinatra::Base
     playlists.to_json
   end
 
-  # READ specific Playlist instances
+  # READ specific Playlist instances. Accepts a User id.
   get '/user_playlists/:id' do
     playlists = User.find(params[:id]).playlists
     playlists.to_json
   end
 
-  # READ songs within a Playlist instance
+  # READ songs within a Playlist instance. Accepts a Playlist id.
   get '/playlist/:id' do
     songs_in_playlist = Playlist.find(params[:id]).songs
     songs_in_playlist.to_json
+  end
+
+  get '/joins' do
+    joins = Join.all
+    joins.to_json
   end
 
   # CREATE a new Playlist instance
@@ -32,7 +37,7 @@ class ApplicationController < Sinatra::Base
     playlist.to_json
   end
 
-  # DELETE a Playlist instance
+  # DELETE a Playlist instance. Accepts a Playlist id.
   delete '/playlist/:id' do
     playlist = Playlist.find(params[:id])
     playlist.destroy
@@ -52,7 +57,7 @@ class ApplicationController < Sinatra::Base
     new_user.to_json
   end
 
-# UPDATE email and password of a User instance
+# UPDATE email and password of a User instance. Accepts a User id.
   patch '/user/:id' do
     user = User.find(params[:id])
     user.update(email: params[:email], password: params[:password])
@@ -65,7 +70,7 @@ class ApplicationController < Sinatra::Base
     new_song.to_json
   end
 
-  # DELETE a row from the Join table (remove a song from the playlist of your choice)
+  # DELETE a row from the Join table (remove a song from the playlist of your choice). Accepts a Join table id.
   delete '/songs/:id' do
     delete_song = Join.find(params[:id])
     delete_song.destroy

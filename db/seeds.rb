@@ -17,7 +17,7 @@ end
     )
 end
 
-20.times do
+10.times do
     Playlist.create(
         name: Faker::Verb.base, 
         rating: rand(1..10), 
