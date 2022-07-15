@@ -72,7 +72,7 @@ class ApplicationController < Sinatra::Base
 
   # DELETE a row from the Join table (remove a song from the playlist of your choice). Accepts a Join table id.
   delete '/songs/:id' do
-    delete_song = Join.find(params[:id])
+    delete_song = Join.find_by(song_id: params[:id])
     delete_song.destroy
     delete_song.to_json
   end
